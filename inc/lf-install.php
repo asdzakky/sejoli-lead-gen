@@ -1,5 +1,18 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+/**
+ * Check sejoli license
+ * @since   1.0.0
+ */
+function sejolisa_lead_check_own_license() {
+
+    global $sejolisa;
+
+    return boolval($sejolisa['license']['valid']);
+
+}
+
 /**
  * Set Asstes Admin
  * Hooked via action admin_enqueue_scripts
@@ -131,16 +144,7 @@ function lfb_wp_assets() {
     wp_enqueue_script('lfb_f_js', LFB_PLUGIN_URL . 'js/f-script.js', array('jquery'), LFB_VER, true);
     wp_localize_script('lfb_f_js', 'frontendajax', 
         array(
-            'ajaxurl' => admin_url('admin-ajax.php'),
-            'affiliate' => array(
-                'link' => array(
-                    'ajaxurl' => add_query_arg([
-                        'action' => 'sejoli-form-lead-affiliate-link-list'
-                    ], admin_url('admin-ajax.php')),
-                    'nonce' => wp_create_nonce('sejoli-list-form-lead-affiliate-link')
-                ),
-                'placeholder' => __('Pencarian Form Lead', 'sejoli-lead-form')
-            )
+            'ajaxurl' => admin_url('admin-ajax.php')
         ));
     wp_enqueue_style('font-awesome', LFB_PLUGIN_URL . 'font-awesome/css/font-awesome.css');
     
@@ -241,12 +245,26 @@ function lfb_wp_assets() {
         ));
         // wp_enqueue_script( 'semantic-ui');
 
-        wp_enqueue_script('lfb_f_js', LFB_PLUGIN_URL . 'js/f-script.js', array('jquery'), LFB_VER, true);
+        wp_enqueue_script('lfb_f_m_js', LFB_PLUGIN_URL . 'js/f-m-script.js', array('jquery'), LFB_VER, true);
+
+        wp_localize_script('lfb_f_m_js', 'frontendajax', 
+        array(
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'affiliate' => array(
+                'link' => array(
+                    'ajaxurl' => add_query_arg([
+                        'action' => 'sejoli-form-lead-affiliate-link-list'
+                    ], admin_url('admin-ajax.php')),
+                    'nonce' => wp_create_nonce('sejoli-list-form-lead-affiliate-link')
+                ),
+                'placeholder' => __('Pencarian Form Lead', 'sejoli-lead-form')
+            )
+        ));
 
         // wp_enqueue_script('lfb_upload', LFB_PLUGIN_URL . 'js/upload.js', '', LFB_VER, true);
         wp_enqueue_script('sweet-dropdown.min', LFB_PLUGIN_URL . 'js/jquery.sweet-dropdown.min.js', '', LFB_VER, true);
         // wp_enqueue_script('lfb_b_js', LFB_PLUGIN_URL . 'js/b-script.js', array('jquery'), LFB_VER, true);
-        wp_localize_script('lfb_f_js', 'backendajax', array('ajaxurl' => admin_url('admin-ajax.php')));
+        wp_localize_script('lfb_f_m_js', 'backendajax', array('ajaxurl' => admin_url('admin-ajax.php')));
     
     endif;
 

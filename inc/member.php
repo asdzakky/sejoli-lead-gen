@@ -200,13 +200,36 @@ function set_template_file(string $file, string $view_request) {
 
     if( in_array( $view_request, array('lead-affiliasi', 'lead-entries') ) ) :
 
-        if( 'lead-affiliasi' === $view_request ) :
+        $current_user_group  = sejolisa_get_user_group();
+        $no_access_affiliate = boolval(sejolisa_carbon_get_theme_option('sejoli_no_access_affiliate'));
 
-            return LFB_PLUGIN_DIR . 'template/lead-affiliasi.php';
+        // Need to be factored later
+        if(
+            !sejolisa_check_user_can_access_affiliate_page()
+        ) :
+            $template_file = 'no-affiliate';
+    
+            $directory = apply_filters('sejoli/template-directory',SEJOLISA_DIR . 'template/');
+            $file      = $directory.$template_file.'.php';
+            $file      = apply_filters('sejoli/template-file', $file, $template_file);
 
-        elseif( 'lead-entries' === $view_request ) :
+            if(file_exists($file)) :
+                return $file;
+            else:
+                return str_replace($template_file, '404', $file);
+            endif;
 
-            return LFB_PLUGIN_DIR . 'template/lead-entries.php';
+        else:
+
+            if( 'lead-affiliasi' === $view_request ) :
+
+                return LFB_PLUGIN_DIR . 'template/lead-affiliasi.php';
+
+            elseif( 'lead-entries' === $view_request ) :
+
+                return LFB_PLUGIN_DIR . 'template/lead-entries.php';
+
+            endif;
 
         endif;
 

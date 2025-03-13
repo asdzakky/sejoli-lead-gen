@@ -29,6 +29,12 @@ function lfbErrorCheck(){
     return termaccept;
 }
 
+function showLoading() {
+    jQuery(".loading").show();
+}
+function hideLoading() {
+    jQuery(".loading").hide();    
+}
 
 
 jQuery(document).ready(function(){
@@ -98,9 +104,6 @@ function lfbInserForm(element,form_id,uploaddata='') {
             if (jQuery.trim(response) == "sudah isi data") {
                 element.find(".leadform-show-message-form-"+form_id).append("<div class='error'><p>Anda sudah pernah isi data sebelumnya, silahkan tunggu beberapa saat untuk melakukan pengisian lagi.</p></div>");
 
-            } else if (jQuery.trim(response) == "data sudah ada") {
-                element.find(".leadform-show-message-form-"+form_id).append("<div class='error'><p>Data Email atau No Telepon Anda sudah terdaftar!.</p></div>");
-
             } else if (jQuery.trim(response) == 'invalidcaptcha') {
 
                 element.find(".leadform-show-message-form-"+form_id).append("<div class='error'><p>Invalid Captcha</p></div>");
@@ -109,7 +112,7 @@ function lfbInserForm(element,form_id,uploaddata='') {
             } else if (jQuery.trim(response) > 0) {
                 var redirect = jQuery(".successmsg_"+form_id).attr('redirect');
                 if(jQuery.trim(redirect)!=''){
-                    element.siblings(".infomsg_"+form_id).css('display','block').text('Please wait...');
+                    element.siblings(".successmsg_"+form_id).css('display','none');
                     jQuery('#lfb-submit').trigger('click');
                     // element.hide();
                     element.siblings(".text-affiliate-by").hide();
@@ -1113,15 +1116,48 @@ function lead_pagination_datewise(page_id, form_id, datewise) {
     });
 }
 
+function show_all_leads(page_id, form_id) {
+    event.preventDefault();
+    var form_data = "form_id=" + form_id + "&id=" + page_id + "&detailview=1&action=ShowAllLeadThisFormByAffiliate";
+    SaveByAjaxRequest(form_data, 'GET').success(function(response) {
+        jQuery('#form-leads-show').empty();
+        jQuery('#form-leads-show').append(response);
+        var colCount = jQuery("#show-leads-table tr th").length;
+        if(colCount > 9){
+            $scrollInnerWidth = "170%";
+        } else {
+            $scrollInnerWidth = "110%";
+        }
+        jQuery('#show-leads-table').DataTable({
+            language   : dataTableTranslation,
+            responsive : false,
+            scrollX    : true,
+            scrollCollapse: true,
+            sScrollXInner: $scrollInnerWidth,
+            autoWidth   : true,
+            fixedColumns: {
+                leftColumns: dataTableTranslation.fixedcolumn
+            },
+            paging     : true,
+            searching  : false,
+            processing : true,
+            pageLength : 10,
+            order      : [],
+        });
+    });
+}
+
+
 function remember_this_form_id() {
     if (confirm("Show this entries?")) {
         var form_id = jQuery('#select_form_lead').val();
         var rem_nonce = jQuery('#remember_this_form_id').attr('rem_nonce');
         jQuery('#remember_this_message').find('div').remove();
+        showLoading();
         var form_data = "rem_nonce=" + rem_nonce + "&form_id=" + form_id + "&action=RememberMeThisForm";
         SaveByAjaxRequest(form_data, 'POST').success(function(response) {
             if (jQuery.trim(form_id) == jQuery.trim(response)) {
-                jQuery('#remember_this_message').append("<div><i>Please Wait...</i></div>");
+                // jQuery('#remember_this_message').append("<div><i>Please Wait...    </i></div>");
                 window.location.reload();
             }
         });
@@ -1175,3 +1211,163 @@ if (document.getElementById("defaultOpen")) {
     // Get the element with id="defaultOpen" and click on it
     document.getElementById("defaultOpen").click();
 }
+
+jQuery(function($) {
+
+    $.ajax({
+        url : frontendajax.ajaxurl,
+        data : {
+            action : 'sejoli_lead_form',
+        },
+        type : 'GET',
+        dataType : 'json',
+        beforeSend : function() {
+
+        },
+        success : function(response) {
+            $('#lead_form_id').select2({
+                allowClear: true,
+                placeholder: frontendajax.affiliate.placeholder,
+                width:'100%',
+                data : response.results,
+                templateResult : function(data) {
+                    return $("<textarea/>").html(data.text).text();
+                },
+                templateSelection : function(data) {
+                    return $("<textarea/>").html(data.text).text();
+                }
+            });
+        }
+    });
+
+    $(document).on("click",'#lead-affiliate-link-generator-button', function(e){
+        e.preventDefault();
+
+        if ( $('#lead_form_id').val() !== '' ) {
+            
+            $.ajax({
+                url : frontendajax.ajaxurl,
+                method: 'POST',
+                dataType : 'json',
+                data : {
+                    lead_form_id : $('#lead_form_id').val(),
+                    action: 'sejoli-form-lead-affiliate-link-list',
+                    nonce : frontendajax.affiliate.link.nonce,
+                },
+                beforeSend : function() {
+                    // sejoli.block();
+                    showLoading();
+                },
+                success : function(data) {
+                    hideLoading();
+                    if ( !$.isEmptyObject( data ) ) {
+                        var template = $.templates("#affiliate-link-tmpl");
+                        var htmlOutput = template.render({'data':data});
+                        $("#affiliate-link-holder").html(htmlOutput);
+                    } else {
+                        $('#affiliate-link-holder').html('<div class="ui red message">Data not found!</div>');
+                    }
+                }
+            });
+
+        } else {
+
+            $('#affiliate-link-holder').html('<div class="ui red message">Please select a lead form</div>');
+
+        }
+    });
+
+    $(document).ready(function(){
+        var colCount = jQuery("#show-leads-table tr th").length;
+        if(colCount > 9){
+            $scrollInnerWidth = "170%";
+        } else {
+            $scrollInnerWidth = "110%";
+        }
+        $('#show-leads-table').DataTable({
+            language   : dataTableTranslation,
+            responsive : false,
+            scrollX    : true,
+            scrollCollapse: true,
+            sScrollXInner: $scrollInnerWidth,
+            autoWidth   : true,
+            fixedColumns: {
+                leftColumns: dataTableTranslation.fixedcolumn
+            },
+            paging     : true,
+            searching  : false,
+            processing : true,
+            pageLength : 10,
+            order      : [],
+        });
+
+        var start = moment().subtract(29, 'days');
+        var end = moment();
+
+        function cb(start, end) {
+            $('input[name="filter-lead-entries"]').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+        }
+
+        $('input[name="filter-lead-entries"]').daterangepicker({
+            startDate: start,
+            endDate: end,
+            locale: {
+              format: 'YYYY-MM-DD'
+            },
+            ranges: {
+               'Today': [moment(), moment()],
+               'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+               'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+               'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+               'This Month': [moment().startOf('month'), moment().endOf('month')],
+               'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        }, cb);
+
+        cb(start, end);
+
+        $("#filter_lead_entries").on('change', function() {
+            var startDate = jQuery(this).data('daterangepicker').startDate.format('Y-M-D');
+            var endDate = jQuery(this).data('daterangepicker').endDate.format('Y-M-D');
+
+            event.preventDefault();
+            showLoading();
+
+            var form_id = jQuery('input[name="form_id_filter"]').val();
+            var form_data = "startDate=" + startDate + "&endDate=" + endDate + "&form_id=" + form_id + "&id=10&detailview=1&action=ShowAllLeadThisForm";
+            SaveByAjaxRequest(form_data, 'GET').success(function(response) {
+                hideLoading();
+                jQuery('#show-leads-table').empty();
+                jQuery('#show-leads-table').append(response);
+                jQuery('#show-leads-table').DataTable().clear().destroy();
+
+                var colCount = jQuery("#show-leads-table tr th").length;
+                if(colCount > 9){
+                    $scrollInnerWidth = "170%";
+                } else {
+                    $scrollInnerWidth = "110%";
+                }
+                jQuery('#show-leads-table').DataTable({
+                    language   : dataTableTranslation,
+                    responsive : false,
+                    scrollX    : true,
+                    scrollCollapse: true,
+                    sScrollXInner: $scrollInnerWidth,
+                    autoWidth   : true,
+                    fixedColumns: {
+                        leftColumns: dataTableTranslation.fixedcolumn
+                    },
+                    paging     : true,
+                    searching  : false,
+                    processing : true,
+                    pageLength : 10,
+                    order      : [],
+                });
+
+                jQuery("#show-leads-table_wrapper > .dt-buttons").appendTo("div.export-button");
+            });
+        });
+
+    });
+
+});

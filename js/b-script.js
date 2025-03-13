@@ -1,12 +1,21 @@
 /*
  *Tabs in admin area
  */
+function showLoading() {
+    jQuery(".loading").show();
+}
+function hideLoading() {
+    jQuery(".loading").hide();    
+}
+
 jQuery(function() {
+
     jQuery('.button-status-lead').click(function() {
 
         var leadID = jQuery(this).attr('data-lead-id');
 
         if (confirm('Proses data #'+leadID+' ke Customer?')) {
+            showLoading();
 
             var form_data = "lead-id=" + leadID + "&action=ProceedToCustomer";
             SaveByAjaxRequest(form_data, 'POST').success(function(response) {
@@ -122,10 +131,12 @@ jQuery(function() {
         var endDate = jQuery(this).data('daterangepicker').endDate.format('Y-M-D');
 
         event.preventDefault();
+        showLoading();
 
         var form_id = jQuery('input[name="form_id_filter"]').val();
         var form_data = "startDate=" + startDate + "&endDate=" + endDate + "&form_id=" + form_id + "&id=10&detailview=1&action=ShowAllLeadThisForm";
         SaveByAjaxRequest(form_data, 'GET').success(function(response) {
+            hideLoading();
             jQuery('#show-leads-table').empty();
             jQuery('#show-leads-table').append(response);
             jQuery('#show-leads-table').DataTable().clear().destroy();
@@ -1378,10 +1389,11 @@ function remember_this_form_id() {
         var form_id = jQuery('#select_form_lead').val();
         var rem_nonce = jQuery('#remember_this_form_id').attr('rem_nonce');
         jQuery('#remember_this_message').find('div').remove();
+        showLoading();
         var form_data = "rem_nonce=" + rem_nonce + "&form_id=" + form_id + "&action=RememberMeThisForm";
         SaveByAjaxRequest(form_data, 'POST').success(function(response) {
             if (jQuery.trim(form_id) == jQuery.trim(response)) {
-                jQuery('#remember_this_message').append("<div><i>Please Wait...</i></div>");
+                // jQuery('#remember_this_message').append("<div><i>Please Wait...</i></div>");
                 window.location.reload();
             }
         });

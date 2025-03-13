@@ -1,6 +1,10 @@
 <?php
     if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+    if(false === sejolisa_lead_check_own_license()) :
+        return;
+    endif;
+
     global $wpdb;
     
     // file include

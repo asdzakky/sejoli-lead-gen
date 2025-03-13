@@ -175,7 +175,11 @@ Class LFB_LeadStoreType{
 
             } else{
 
-                $table .= $value .': '. $form_data[$key]."\r \n";
+                if(isset($form_data[$key]) && is_array($form_data[$key])){
+                    $table .= $value .': '. $form_data[$key]."\r \n";
+                } else {
+                    $table .= null;
+                }
 
             }
             
@@ -270,6 +274,8 @@ Class LFB_LeadStoreType{
 
         $form_entry_data .=	"<br/>";
         $headers[] = 'Content-Type: text/html; charset=UTF-8';
+
+        $message = '';
 
         if(!empty($mail_setting)){
             $sitelink = preg_replace('#^https?://#', '', site_url());

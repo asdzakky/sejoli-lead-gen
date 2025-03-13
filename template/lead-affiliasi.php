@@ -15,6 +15,7 @@
 <div id="affiliate-link-holder">
     <div class="ui info message"><?php _e( 'Silahkan pilih Form Lead', 'sejoli-lead-form' ); ?></div>
 </div>
+<div class="loading" style="display: none;"><?php _e( 'Please Wait...', 'sejoli-lead-form' ); ?></div>
 
 <script id="affiliate-link-tmpl" type="text/x-jsrender">
 {{props data}}

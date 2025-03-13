@@ -37,7 +37,6 @@ function sejoli_show_affiliate_form_lead_by_id( $form_id ) {
  * @param   string $key  [description]
  * @return  json
  */
-add_action( 'wp_ajax_sejoli_lead_form', 'sejoli_lead_get_lead_form_ajax_callback' );
 function sejoli_lead_get_lead_form_ajax_callback(){
     
     global $wpdb;
@@ -72,6 +71,7 @@ function sejoli_lead_get_lead_form_ajax_callback(){
     exit;
 
 }
+add_action( 'wp_ajax_sejoli_lead_form', 'sejoli_lead_get_lead_form_ajax_callback' );
 
 /**
  * Generate lead form affililiate link
@@ -81,7 +81,6 @@ function sejoli_lead_get_lead_form_ajax_callback(){
  * @param   string $key  [description]
  * @return  json
  */
-add_action( 'wp_ajax_sejoli-form-lead-affiliate-link-list', 'sejoli_lead_get_affiliate_link_lead_form_ajax_callback' );
 function sejoli_lead_get_affiliate_link_lead_form_ajax_callback(){
 
 	$data = [];
@@ -116,6 +115,7 @@ function sejoli_lead_get_affiliate_link_lead_form_ajax_callback(){
     exit;
     
 }
+add_action( 'wp_ajax_sejoli-form-lead-affiliate-link-list', 'sejoli_lead_get_affiliate_link_lead_form_ajax_callback' );
 
 /**
  * Get cookie name

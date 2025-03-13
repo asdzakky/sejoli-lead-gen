@@ -92,7 +92,7 @@ function sejoli_lead_check_sejoli() {
 add_action('admin_notices', 'display_lead_license_message');
 function display_lead_license_message() {
 
-    if(false === sejolisa_lead_check_own_license()) :
+    if(false === sejolisa_lead_check_valid_license() ) :
 
 ?>
         <div class="notice notice-error">

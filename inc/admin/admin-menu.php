@@ -10,9 +10,10 @@ if (!function_exists('themehunk_admin_menu')) {
     include_once LEADCAMPAIGN_PDIR . '../lf-install.php';
 
     function themehunk_admin_menu(){
-        if(false === sejolisa_lead_check_own_license()) :
+        if(false === sejolisa_lead_check_valid_license() ) :
             return;
         endif;
+        error_log(print_r(sejolisa_lead_check_valid_license(), true));
         add_menu_page(__('Lead Campaign', 'sejoli-lead-form'), __('Lead Campaign', 'sejoli-lead-form'), 'manage_options', 'lead-forms', 'lfb_lead_form_page',  LEADCAMPAIGN_PURL . 'th-option/assets/images/icon.png', 35);
     }
 

@@ -1,7 +1,7 @@
 <?php
     if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-    if(false === sejolisa_lead_check_own_license()) :
+    if(false === sejolisa_lead_check_valid_license() ) :
         return;
     endif;
 

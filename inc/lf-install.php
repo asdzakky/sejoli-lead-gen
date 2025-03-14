@@ -61,9 +61,7 @@ function sejolisa_lead_check_valid_license() {
     else:
         $status = false;
     endif;
-    error_log(print_r("STATUS LICENSE", true));
-    error_log(print_r($get_tracking_updater, true));
-    error_log(print_r($status, true));
+    
     return $status;
 
 }

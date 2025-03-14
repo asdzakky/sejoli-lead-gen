@@ -35,7 +35,7 @@ function sejolisa_lead_check_valid_transient_license() {
         $response = wp_remote_get($link);
         $response = json_decode(wp_remote_retrieve_body($response), true);
         
-        if( $response['detail']['status'] === "active" ) :
+        if (isset($response['detail']['status']) && $response['detail']['status'] === "active") :
 
             set_transient( 'sejoli_lead_subscription_validate', "subscribed", 2 * DAY_IN_SECONDS );
             

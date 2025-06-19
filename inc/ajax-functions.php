@@ -1491,13 +1491,15 @@ function lfb_customeremail_send($form_data,$form_id,$lead_id,$form_product,$form
 
     $headers[] = "From:".$header." <".$customer_email_setting_form.">";
     $headers[] = "Reply-To:".$header." <".$customer_email_setting_form.">";  
+    $attachments = [];
     
     if($message && $to && $subject) {
         $email = new LeadFormEmail();
         $email->send(
             array($to),
             $message,
-            $subject
+            $subject, 
+            $attachments
         );
     }
 
@@ -1831,7 +1833,8 @@ function lfb_ProceedToCustomer(){
 
             // get user data by checkout data
             // if the value is in valid, then later need to register
-            $user_data = apply_filters( 'sejoli/checkout/user-data', false, $post_data );
+            // $user_data = apply_filters( 'sejoli/checkout/user-data', false, $post_data );
+            $user_data = false;
 
             // validate shipping
             $valid = apply_filters( 'sejoli/checkout/is-shipping-valid', $valid, $product, $post_data );
@@ -1844,12 +1847,8 @@ function lfb_ProceedToCustomer(){
 
             $password_field = boolval(sejolisa_carbon_get_post_meta($product->ID, 'display_password_field'));
 
-            if ( is_user_logged_in() && false === $user_data ) :
-                
-                $valid = apply_filters( 'sejoli/checkout/is-user-data-valid', $valid, $post_data );
-                
-            elseif ( !is_user_logged_in() && false !== $password_field && false === $user_data ) :
-               
+            if ( !is_user_logged_in() && false !== $password_field && false === $user_data ) :
+                   
                 $valid = apply_filters( 'sejoli/checkout/is-user-data-valid', $valid, $post_data );
                     
             endif;

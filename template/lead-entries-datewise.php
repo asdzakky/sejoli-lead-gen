@@ -68,26 +68,26 @@ if (!empty($posts)) {
 
         global $wpdb;
         $table_form = LFB_FORM_FIELD_TBL;
-        $prepare_9 = $wpdb->prepare("SELECT * FROM $table_form WHERE id = %d LIMIT 1", $results->form_id);
-        $posts = $th_save_db->lfb_get_form_content($prepare_9);
-        if ($posts) {
-            $followup_text = maybe_unserialize($posts[0]->followup_setting);;
-        }
+        // $prepare_9 = $wpdb->prepare("SELECT * FROM $table_form WHERE id = %d LIMIT 1", $results->form_id);
+        // $posts = $th_save_db->lfb_get_form_content($prepare_9);
+        // if ($posts) {
+        //     $followup_text = maybe_unserialize($posts[0]->followup_setting);;
+        // }
 
-        $text_follow = '';
-        foreach ($form_data_result as $results) {
-            $type = isset($results['field_type']['type']) ? $results['field_type']['type'] : '';
-            if ( $type === 'phonenumber' ) {
-                $field_id = $results['field_id'];
-                $phone_number = isset($form_data['phonenumber_'.$field_id]) ? $this->phone_number_format($form_data['phonenumber_'.$field_id]) : '';
-                if ( wp_is_mobile() ) :
-                    $table_row .= '<td><a target="_blank" class="lead-followup-wa" href="https://wa.me/'.$phone_number  . '?text='. $followup_text .'"><i class="fa fa-whatsapp" aria-hidden="true" title="Follow Up via WhatsApp"></i></a></td>';
-                else :
-                    $table_row .= '<td><a target="_blank" class="lead-followup-wa" href="https://api.whatsapp.com/send?phone='.$phone_number.'&text='.$followup_text.'"><i class="fa fa-whatsapp" aria-hidden="true" title="Follow Up via WhatsApp"></i></a></td>';
-                endif;
-                $text_follow = "Follow Up";
-            }
-        }
+        // $text_follow = '';
+        // foreach ($form_data_result as $results) {
+        //     $type = isset($results['field_type']['type']) ? $results['field_type']['type'] : '';
+        //     if ( $type === 'phonenumber' ) {
+        //         $field_id = $results['field_id'];
+        //         $phone_number = isset($form_data['phonenumber_'.$field_id]) ? $this->phone_number_format($form_data['phonenumber_'.$field_id]) : '';
+        //         if ( wp_is_mobile() ) :
+        //             $table_row .= '<td><a target="_blank" class="lead-followup-wa" href="https://wa.me/'.$phone_number  . '?text='. $followup_text .'"><i class="fa fa-whatsapp" aria-hidden="true" title="Follow Up via WhatsApp"></i></a></td>';
+        //         else :
+        //             $table_row .= '<td><a target="_blank" class="lead-followup-wa" href="https://api.whatsapp.com/send?phone='.$phone_number.'&text='.$followup_text.'"><i class="fa fa-whatsapp" aria-hidden="true" title="Follow Up via WhatsApp"></i></a></td>';
+        //         endif;
+        //         $text_follow = "Follow Up";
+        //     }
+        // }
 
         $table_row .= '<td>'.$status.'</td>';
 
@@ -102,7 +102,7 @@ if (!empty($posts)) {
     }
 
     $thHead = '<div class="wrap" id="form-leads-show"><table class="show-leads-table wp-list-table widefat fixed" id="show-leads-table" >
-        <thead><tr><th>ID</th><th>Product</th>'.$tableHead.'<th>Affiliate</th><th>Value</th><th>Date</th>'.$table_head.'<th>'.$text_follow.'</th><th>Status</th></tr></thead>';
+        <thead><tr><th>ID</th><th>Product</th>'.$tableHead.'<th>Affiliate</th><th>Value</th><th>Date</th>'.$table_head.'<th>Status</th></tr></thead>';
 
     echo wp_kses($thHead. $table_body.'</table>'.$popupTab,$this->expanded_alowed_tags());
 } else {

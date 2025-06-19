@@ -13,6 +13,7 @@ echo '<div class="form-block" style="padding-top:2em">
         <th scope="col" id="shortcode" class="manage-column column-shortcode">'.esc_html__('Shortcode','sejoli-lead-form').'</th>
         <th scope="col" id="today_count" class="manage-column column-form-count sortable desc">'.esc_html__("Today's Lead",'sejoli-lead-form').' </th>
         <th scope="col" id="total_count" class="manage-column column-form-count sortable desc">'.esc_html__('Total Lead','sejoli-lead-form').' </th>
+        <th scope="col" id="total_count" class="manage-column column-form-count sortable desc">'.esc_html__('Total Customer','sejoli-lead-form').' </th>
         <th scope="col" id="date" class="manage-column column-form-date sortable desc">'.esc_html__('Date','sejoli-lead-form').' </th>
         </tr>
     </thead>
@@ -48,9 +49,13 @@ echo '<div class="form-block" style="padding-top:2em">
             $count_result = $th_save_db->lfb_get_form_content($prepare_13);
             $lead_count = count($count_result);
 
-            $prepare_14 = $wpdb->prepare("SELECT id FROM $data_table WHERE form_id = %d ", $form_id );
+            $prepare_14 = $wpdb->prepare("SELECT id FROM $data_table WHERE form_id = %d", $form_id );
             $total_lead_result = $th_save_db->lfb_get_form_content($prepare_14);
             $total_lead_result = count($total_lead_result);
+
+            $prepare_15 = $wpdb->prepare("SELECT id FROM $data_table WHERE form_id = %d AND status ='customer' ", $form_id );
+            $total_customer_result = $th_save_db->lfb_get_form_content($prepare_15);
+            $total_customer_result = count($total_customer_result);
             $edit_url_nonce =$lfb_admin_url . 'admin.php?page=add-new-form&action=edit&formid=' . $form_id.'&_wpnonce='.$this->lfb_show_form_nonce();
 
             $advance_adons =$lfb_admin_url . 'admin.php?page=lfb-form-extension&fname=' . $form_title.'&fid=' . $form_id.'&_wpnonce='.$this->lfb_show_form_nonce();
@@ -75,6 +80,9 @@ echo '<div class="form-block" style="padding-top:2em">
                 </td>
                 <td class="form-date column-form-date" data-colname="Form-date">
                 <abbr><a href="' . esc_url($lfb_admin_url)  . 'admin.php?page=all-form-entries&action=total_leads&formid=' . intval($form_id) . '" target="_blank"><div class="lfb-counter total-lead">' . intval($total_lead_result) . '</div></a></abbr>
+                </td>
+                <td class="form-date column-form-date" data-colname="Form-date">
+                <abbr><a href="' . esc_url($lfb_admin_url)  . 'admin.php?page=all-form-entries&action=total_customers&formid=' . intval($form_id) . '" target="_blank"><div class="lfb-counter total-customer">' . intval($total_customer_result) . '</div></a></abbr>
                 </td>
 
                 <td class="form-date column-form-date" data-colname="Form-date">

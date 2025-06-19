@@ -9,7 +9,7 @@
  * Plugin Name:       Sejoli - Lead Campaign
  * Plugin URI:        https://sejoli.co.id
  * Description:       Integrate Sejoli Premium WordPress Membership Plugin with Lead Campaign Addon.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Requires PHP:      7.4.1
  * Author:            Sejoli
  * Author URI:        https://sejoli.co.id
@@ -25,9 +25,16 @@ if ( ! defined( 'WPINC' ) ) {
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 // Version constant for easy CSS refreshes
 
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+    if (strpos($errstr, '_load_textdomain_just_in_time') !== false) {
+        return true;
+    }
+    return false;
+});
+
 if (!function_exists('lfb_plugin_action_links')){
 
-    define('LFB_VER', '1.1.0');
+    define('LFB_VER', '1.1.1');
 
     define('LFB_PLUGIN_URL', plugin_dir_url(__FILE__));
     define( 'LFB_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
@@ -66,7 +73,7 @@ if (!function_exists('lfb_plugin_action_links')){
 
 }
 
-// add_action('plugins_loaded', 'sejoli_lead_check_sejoli');
+add_action('plugins_loaded', 'sejoli_lead_check_sejoli');
 add_action('admin_init', 'sejoli_lead_check_sejoli');
 
 function sejoli_lead_check_sejoli() {
@@ -114,7 +121,30 @@ function sejoli_plugin_activation_check() {
         deactivate_plugins(plugin_basename(__FILE__));
 
         // Stop the activation process
-        wp_die(__('Plugin Sejoli Lead Campaign Tidak Bisa diaktifkan, Anda belum menginstall atau mengaktifkan SEJOLI terlebih dahulu.', 'sejoli-lead-form'));
+        wp_die(
+            __('Plugin Sejoli Lead Campaign Tidak Bisa diaktifkan, Anda belum menginstall atau mengaktifkan SEJOLI terlebih dahulu.', 'sejoli-lead-form'),
+            __('Aktivasi Gagal', 'sejoli-lead-form'),
+            array(
+                'link_url' => admin_url('plugins.php'),
+                'link_text' => __('Kembali ke halaman Plugin', 'sejoli-lead-form')
+            )
+        );
+
+    endif;
+
+    if(false === sejolisa_lead_check_valid_license() ) :
+    
+        deactivate_plugins(plugin_basename(__FILE__));
+
+        // Stop the activation process
+        wp_die(
+            __('Plugin Sejoli Lead Campaign Tidak Bisa diaktifkan, Anda belum menginstall atau mengaktifkan SEJOLI terlebih dahulu.', 'sejoli-lead-form'),
+            __('Aktivasi Gagal', 'sejoli-lead-form'),
+            array(
+                'link_url' => admin_url('plugins.php'),
+                'link_text' => __('Kembali ke halaman Plugin', 'sejoli-lead-form')
+            )
+        );
 
     endif;
 

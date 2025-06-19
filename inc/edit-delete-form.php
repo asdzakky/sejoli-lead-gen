@@ -144,9 +144,7 @@ Class LFB_EDIT_DEL_FORM {
             <a class="nav-tab edit-lead-form '.esc_attr($_active).'" href="#">'.esc_html__("Edit Form","sejoli-lead-form").'</a>
             <a class="nav-tab lead-form-email-setting  '.esc_attr($email_active).'" href="#">'.esc_html__("Email Setting","sejoli-lead-form").'</a>
             <a class="nav-tab lead-form-wa-setting  '.esc_attr($wa_active).'" href="#">'.esc_html__("WhatsApp Setting","sejoli-lead-form").'</a>
-            <a class="nav-tab lead-form-sms-setting  '.esc_attr($sms_active).'" href="#">'.esc_html__("SMS Setting","sejoli-lead-form").'</a>
-            <a class="nav-tab lead-form-autoresponder-setting  '.esc_attr($autoresponder_active).'" href="#">'.esc_html__("Autoresponder Setting","sejoli-lead-form").'</a>
-            <a class="nav-tab lead-form-followup-setting  '.esc_attr($followup_active).'" href="#">'.esc_html__("Follow Up Setting","sejoli-lead-form").'</a>
+            <a class="nav-tab lead-form-autoresponder-setting  '.esc_attr($customer_active).'" href="#">'.esc_html__("Autoresponder Setting","sejoli-lead-form").'</a>
             <a class="nav-tab lead-form-customer-setting  '.esc_attr($customer_active).'" href="#">'.esc_html__("Customer Setting","sejoli-lead-form").'</a>
             <a class="nav-tab lead-form-captcha-setting  '.esc_attr($captcha_active).'" href="#">'.esc_html__("Captcha Setting","sejoli-lead-form").'</a>
             <a class="nav-tab lead-form-setting  '.esc_attr($form_active).'" href="#">'.esc_html__("Setting","sejoli-lead-form").'</a>
@@ -200,24 +198,24 @@ Class LFB_EDIT_DEL_FORM {
                 $lf_wa_setting_form = new LFB_WhatsAppSettingForm($this_form_id);
                 $lf_wa_setting_form->lfb_whatsapp_setting_form($this_form_id,$wa_setting_result,$userwa_setting_result,$affiliatewa_setting_result);
             }
-        echo '</section>
-            <section>';
-            if (is_admin()) {
-                $lf_sms_setting_form = new LFB_SMSSettingForm($this_form_id);
-                $lf_sms_setting_form->lfb_sms_setting_form($this_form_id,$sms_setting_result,$usersms_setting_result,$affiliatesms_setting_result);
-            }
+        // echo '</section>
+        //     <section>';
+        //     if (is_admin()) {
+        //         $lf_sms_setting_form = new LFB_SMSSettingForm($this_form_id);
+        //         $lf_sms_setting_form->lfb_sms_setting_form($this_form_id,$sms_setting_result,$usersms_setting_result,$affiliatesms_setting_result);
+        //     }
         echo '</section>
             <section>';
             if (is_admin()) {
                 $lf_autoresponder_setting_form = new LFB_AutoresponderSettingForm($this_form_id);
                 $lf_autoresponder_setting_form->lfb_autoresponder_setting_form($this_form_id, $autoresponder_setting_result);
             }
-        echo '</section>
-            <section>';
-            if (is_admin()) {
-                $lf_followup_setting_form = new LFB_FollowUpSettingForm($this_form_id);
-                $lf_followup_setting_form->lfb_followup_setting_form($this_form_id, $followup_setting_result);
-            }
+        // echo '</section>
+        //     <section>';
+        //     if (is_admin()) {
+        //         $lf_followup_setting_form = new LFB_FollowUpSettingForm($this_form_id);
+        //         $lf_followup_setting_form->lfb_followup_setting_form($this_form_id, $followup_setting_result);
+        //     }
         echo '</section>
             <section>';
             if (is_admin()) {

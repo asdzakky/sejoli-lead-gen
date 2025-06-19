@@ -15,7 +15,7 @@ function sejolisa_lead_check_own_license() {
 
 function sejolisa_lead_check_valid_transient_license() {
 
-    $get_tracking_updater = get_transient( 'sejoli_lead_subscription_validate' );
+    $get_tracking_updater = get_transient( 'sejoli_lead_subscription_validate_leadplus' );
 
     if( empty($get_tracking_updater) || !empty($get_tracking_updater) ) :
 
@@ -37,13 +37,13 @@ function sejolisa_lead_check_valid_transient_license() {
         
         if (isset($response['detail']['status']) && $response['detail']['status'] === "active") :
 
-            set_transient( 'sejoli_lead_subscription_validate', "subscribed", 2 * DAY_IN_SECONDS );
+            set_transient( 'sejoli_lead_subscription_validate_leadplus', "subscribed", 2 * DAY_IN_SECONDS );
             
             return;
 
         else:
 
-            set_transient( 'sejoli_lead_subscription_validate', "not_subscribed", 2 * DAY_IN_SECONDS );
+            set_transient( 'sejoli_lead_subscription_validate_leadplus', "not_subscribed", 2 * DAY_IN_SECONDS );
 
         endif;
     
@@ -54,7 +54,7 @@ add_filter( "admin_init", 'sejolisa_lead_check_valid_transient_license' );
 
 function sejolisa_lead_check_valid_license() {
 
-    $get_tracking_updater = get_transient( 'sejoli_lead_subscription_validate' );
+    $get_tracking_updater = get_transient( 'sejoli_lead_subscription_validate_leadplus' );
 
     if( $get_tracking_updater === "subscribed" ) :
         $status = true;

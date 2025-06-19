@@ -33,6 +33,9 @@ Coming soon
 
 == Changelog ==
 
+= 1.1.1
+* Remove SMS, Follow Up Feature
+
 = 1.1.0
 * Validate sejoli license to using this plugin
 

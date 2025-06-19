@@ -128,9 +128,13 @@ if (!function_exists('lfb_plugin_activate')) {
 Class LFB_SAVE_DB{
 
     private $thdb;
-    private  $leadform = 'lead_form';
-    private  $lf_ext = 'lead_form_extension';
-    private  $lfb_options = 'lead_form_options';
+    private $leadform = 'lead_form';
+    private $lf_ext = 'lead_form_extension';
+    private $lfb_options = 'lead_form_options';
+
+    private $tbl_leadform;
+    private $tbl_extension;
+    private $tbl_options;
 
     /**
      * Construct

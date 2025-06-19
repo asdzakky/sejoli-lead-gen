@@ -1063,53 +1063,53 @@ jQuery("form#form-affiliate-wa-setting").submit(function(event) {
 /*
  *Save sms setting for each form
  */
-jQuery("form#form-sms-setting").submit(function(event) {
-    var form_data = jQuery("form#form-sms-setting").serialize();
-    form_data = form_data + "&action=SaveSMSSettings";
-    event.preventDefault();
-    jQuery("#error-message-sms-setting").find("div").remove();
-    SaveByAjaxRequest(form_data, 'POST').success(function(response) {
-        if (jQuery.trim(response) == 'updated' || jQuery.trim(response) == '') {
-            jQuery("#error-message-sms-setting").append("<div class='success'><p>Updated Succesfully..!!</p></div>");
-        } else {
-            jQuery("#error-message-sms-setting").append("<div class='error'><p>Something Went Wrong..!!</p></div>");
-        }
-    });
-})
+// jQuery("form#form-sms-setting").submit(function(event) {
+//     var form_data = jQuery("form#form-sms-setting").serialize();
+//     form_data = form_data + "&action=SaveSMSSettings";
+//     event.preventDefault();
+//     jQuery("#error-message-sms-setting").find("div").remove();
+//     SaveByAjaxRequest(form_data, 'POST').success(function(response) {
+//         if (jQuery.trim(response) == 'updated' || jQuery.trim(response) == '') {
+//             jQuery("#error-message-sms-setting").append("<div class='success'><p>Updated Succesfully..!!</p></div>");
+//         } else {
+//             jQuery("#error-message-sms-setting").append("<div class='error'><p>Something Went Wrong..!!</p></div>");
+//         }
+//     });
+// })
 /*
  *Save user sms setting for each form
  */
-jQuery("form#form-user-sms-setting").submit(function(event) {
-    var form_data = jQuery("form#form-user-sms-setting").serialize();
-    form_data = form_data + "&action=SaveUserSMSSettings";
-    event.preventDefault();
-    jQuery("#error-message-user-sms-setting").find("div").remove();
-    SaveByAjaxRequest(form_data, 'POST').success(function(response) {
+// jQuery("form#form-user-sms-setting").submit(function(event) {
+//     var form_data = jQuery("form#form-user-sms-setting").serialize();
+//     form_data = form_data + "&action=SaveUserSMSSettings";
+//     event.preventDefault();
+//     jQuery("#error-message-user-sms-setting").find("div").remove();
+//     SaveByAjaxRequest(form_data, 'POST').success(function(response) {
 
-        if (jQuery.trim(response) == 'updated' || jQuery.trim(response) == '') {
-            jQuery("#error-message-user-sms-setting").append("<div class='success'><p>Updated Succesfully..!!</p></div>");
-        } else {
-            jQuery("#error-message-user-sms-setting").append("<div class='error'><p>Something Went Wrong..!!</p></div>");
-        }
-    });
-})
+//         if (jQuery.trim(response) == 'updated' || jQuery.trim(response) == '') {
+//             jQuery("#error-message-user-sms-setting").append("<div class='success'><p>Updated Succesfully..!!</p></div>");
+//         } else {
+//             jQuery("#error-message-user-sms-setting").append("<div class='error'><p>Something Went Wrong..!!</p></div>");
+//         }
+//     });
+// })
 
 /*
  *Save affiliate sms setting for each form
  */
-jQuery("form#form-affiliate-sms-setting").submit(function(event) {
-    var form_data = jQuery("form#form-affiliate-sms-setting").serialize();
-    form_data = form_data + "&action=SaveAffiliateSMSSettings";
-    event.preventDefault();
-    jQuery("#error-message-affiliate-sms-setting").find("div").remove();
-    SaveByAjaxRequest(form_data, 'POST').success(function(response) {
-        if (jQuery.trim(response) == 'updated' || jQuery.trim(response) == '') {
-            jQuery("#error-message-affiliate-sms-setting").append("<div class='success'><p>Updated Succesfully..!!</p></div>");
-        } else {
-            jQuery("#error-message-affiliate-sms-setting").append("<div class='error'><p>Something Went Wrong..!!</p></div>");
-        }
-    });
-})
+// jQuery("form#form-affiliate-sms-setting").submit(function(event) {
+//     var form_data = jQuery("form#form-affiliate-sms-setting").serialize();
+//     form_data = form_data + "&action=SaveAffiliateSMSSettings";
+//     event.preventDefault();
+//     jQuery("#error-message-affiliate-sms-setting").find("div").remove();
+//     SaveByAjaxRequest(form_data, 'POST').success(function(response) {
+//         if (jQuery.trim(response) == 'updated' || jQuery.trim(response) == '') {
+//             jQuery("#error-message-affiliate-sms-setting").append("<div class='success'><p>Updated Succesfully..!!</p></div>");
+//         } else {
+//             jQuery("#error-message-affiliate-sms-setting").append("<div class='error'><p>Something Went Wrong..!!</p></div>");
+//         }
+//     });
+// })
 
 /*
  *Save customer email setting for each form
@@ -1148,19 +1148,19 @@ jQuery("form#form-customer-wa-setting").submit(function(event) {
 /*
  *Save customer sms setting for each form
  */
-jQuery("form#form-customer-sms-setting").submit(function(event) {
-    var form_data = jQuery("form#form-customer-sms-setting").serialize();
-    form_data = form_data + "&action=SaveCustomerSMSSettings";
-    event.preventDefault();
-    jQuery("#error-message-customer-sms-setting").find("div").remove();
-    SaveByAjaxRequest(form_data, 'POST').success(function(response) {
-        if (jQuery.trim(response) == 'updated' || jQuery.trim(response) == '') {
-            jQuery("#error-message-customer-sms-setting").append("<div class='success'><p>Updated Succesfully..!!</p></div>");
-        } else {
-            jQuery("#error-message-customer-sms-setting").append("<div class='error'><p>Something Went Wrong..!!</p></div>");
-        }
-    });
-})
+// jQuery("form#form-customer-sms-setting").submit(function(event) {
+//     var form_data = jQuery("form#form-customer-sms-setting").serialize();
+//     form_data = form_data + "&action=SaveCustomerSMSSettings";
+//     event.preventDefault();
+//     jQuery("#error-message-customer-sms-setting").find("div").remove();
+//     SaveByAjaxRequest(form_data, 'POST').success(function(response) {
+//         if (jQuery.trim(response) == 'updated' || jQuery.trim(response) == '') {
+//             jQuery("#error-message-customer-sms-setting").append("<div class='success'><p>Updated Succesfully..!!</p></div>");
+//         } else {
+//             jQuery("#error-message-customer-sms-setting").append("<div class='error'><p>Something Went Wrong..!!</p></div>");
+//         }
+//     });
+// })
 
 /*
  *Save autoresponder setting for each form
@@ -1177,24 +1177,24 @@ jQuery("form#form-autoresponder-setting").submit(function(event) {
             jQuery("#error-message-autoresponder-setting").append("<div class='error'><p>Something Went Wrong..!!</p></div>");
         }
     });
-})
+});
 
 /*
  *Save followup setting for each form
  */
-jQuery("form#form-followup-setting").submit(function(event) {
-    var form_data = jQuery("form#form-followup-setting").serialize();
-    form_data = form_data + "&action=SaveFollowUpSettings";
-    event.preventDefault();
-    jQuery("#error-message-followup-setting").find("div").remove();
-    SaveByAjaxRequest(form_data, 'POST').success(function(response) {
-        if (jQuery.trim(response) == 'updated' || jQuery.trim(response) == '') {
-            jQuery("#error-message-followup-setting").append("<div class='success'><p>Updated Succesfully..!!</p></div>");
-        } else {
-            jQuery("#error-message-followup-setting").append("<div class='error'><p>Something Went Wrong..!!</p></div>");
-        }
-    });
-})
+// jQuery("form#form-followup-setting").submit(function(event) {
+//     var form_data = jQuery("form#form-followup-setting").serialize();
+//     form_data = form_data + "&action=SaveFollowUpSettings";
+//     event.preventDefault();
+//     jQuery("#error-message-followup-setting").find("div").remove();
+//     SaveByAjaxRequest(form_data, 'POST').success(function(response) {
+//         if (jQuery.trim(response) == 'updated' || jQuery.trim(response) == '') {
+//             jQuery("#error-message-followup-setting").append("<div class='success'><p>Updated Succesfully..!!</p></div>");
+//         } else {
+//             jQuery("#error-message-followup-setting").append("<div class='error'><p>Something Went Wrong..!!</p></div>");
+//         }
+//     });
+// })
 
 /*
  *Save leads setting for each form

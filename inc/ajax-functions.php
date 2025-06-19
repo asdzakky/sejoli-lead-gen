@@ -402,7 +402,7 @@ function lfb_save_sms_settings(){
     }
 
 }
-add_action('wp_ajax_SaveSMSSettings', 'lfb_save_sms_settings');
+// add_action('wp_ajax_SaveSMSSettings', 'lfb_save_sms_settings');
 
 /**
  * Save User SMS Settings
@@ -436,7 +436,7 @@ function lfb_save_user_sms_settings(){
     }
 
 }
-add_action('wp_ajax_SaveUserSMSSettings', 'lfb_save_user_sms_settings');
+// add_action('wp_ajax_SaveUserSMSSettings', 'lfb_save_user_sms_settings');
 
 /**
  * Save Affiliate SMS Settings
@@ -470,7 +470,7 @@ function lfb_save_affiliate_sms_settings(){
     }
 
 }
-add_action('wp_ajax_SaveAffiliateSMSSettings', 'lfb_save_affiliate_sms_settings');
+// add_action('wp_ajax_SaveAffiliateSMSSettings', 'lfb_save_affiliate_sms_settings');
 
 /**
  * Save Customer Email Settings
@@ -575,7 +575,7 @@ function lfb_save_customer_sms_settings(){
     }
 
 }
-add_action('wp_ajax_SaveCustomerSMSSettings', 'lfb_save_customer_sms_settings');
+// add_action('wp_ajax_SaveCustomerSMSSettings', 'lfb_save_customer_sms_settings');
 
 /**
  * Save Captcha Keys
@@ -667,7 +667,7 @@ function lfb_save_followup_settings(){
     }
 
 }
-add_action('wp_ajax_SaveFollowUpSettings', 'lfb_save_followup_settings');
+// add_action('wp_ajax_SaveFollowUpSettings', 'lfb_save_followup_settings');
 
 /**
  * Delete Leads from Backend
@@ -1141,8 +1141,6 @@ function lfb_check_user_has_submited_data($form_product, $form_id) {
             OR form_data LIKE '%" . str_replace("+62","0", $en['phonenumber']) . "%'
         ");
 
-            error_log(print_r("AHAY", true));
-
     elseif( $en['email'] ) :
 
         $rows = $wpdb->prepare("
@@ -1311,7 +1309,6 @@ function lfb_register_autoresponder($form_id, $product, $form_data) {
         endif;
 
     endif;
-
 
 }
 
@@ -1832,6 +1829,10 @@ function lfb_ProceedToCustomer(){
             // validate product
             $valid = apply_filters( 'sejoli/checkout/is-product-valid', $valid, $product, $post_data );
 
+            // get user data by checkout data
+            // if the value is in valid, then later need to register
+            $user_data = apply_filters( 'sejoli/checkout/user-data', false, $post_data );
+
             // validate shipping
             $valid = apply_filters( 'sejoli/checkout/is-shipping-valid', $valid, $product, $post_data );
 
@@ -1840,6 +1841,18 @@ function lfb_ProceedToCustomer(){
 
             // validate variant
             $valid = apply_filters( 'sejoli/variant/are-variants-valid', $valid, $post_data );
+
+            $password_field = boolval(sejolisa_carbon_get_post_meta($product->ID, 'display_password_field'));
+
+            if ( is_user_logged_in() && false === $user_data ) :
+                
+                $valid = apply_filters( 'sejoli/checkout/is-user-data-valid', $valid, $post_data );
+                
+            elseif ( !is_user_logged_in() && false !== $password_field && false === $user_data ) :
+               
+                $valid = apply_filters( 'sejoli/checkout/is-user-data-valid', $valid, $post_data );
+                    
+            endif;
 
             // Processing checkout complete
             // Everything is valid
@@ -1861,7 +1874,6 @@ function lfb_ProceedToCustomer(){
                     'wallet'             => $post_data['wallet']
                 ];
 
-
                 //affiliate link simulation
                 if( defined( 'WP_CLI' ) && !empty( $post_data['affiliate_id'] ) ) :
 
@@ -1873,22 +1885,29 @@ function lfb_ProceedToCustomer(){
                 
                 endif;
 
-                // user is not registered
-                if( $product->type === "physical" ) :
+                do_action( 'sejoli/order/set-affiliate', $post_data );
 
-                    do_action('sejoli/user/register', $post_data);
-                    $user_data = sejolisa_get_user( $post_data['user_phone'] );
-
-                else:
-
-                    do_action('sejoli/user/register', $post_data);
-                    $user_data = sejolisa_get_user( $post_data['user_email'] );
-
+                if ($user_data && isset($user_data->ID)) :
+                    $order_data['user_id'] = $user_data->ID;
                 endif;
 
-                if($user_data){
-                    $order_data['user_id'] = $user_data->ID;
-                }
+                // user is not registered
+                if(false === $user_data) :
+                    if( $product->type === "physical" ) :
+                        do_action('sejoli/user/register', $post_data);
+                        $user_data = sejolisa_get_user($post_data['user_phone']); // user phone
+                        if ($user_data && isset($user_data->ID)) :
+                            $order_data['user_id'] = $user_data->ID;
+                        endif;
+                    else:
+                        do_action('sejoli/user/register', $post_data);
+                        $user_data = sejolisa_get_user($post_data['user_email']); // user email
+                        if ($user_data && isset($user_data->ID)) :
+                            $order_data['user_id'] = $user_data->ID;
+                        endif;
+                    endif;
+                endif;
+
                 $order_data['status'] = 'completed';
 
                 // Order type checking must be first before set grand total
@@ -1917,16 +1936,22 @@ function lfb_ProceedToCustomer(){
                     $order_data = $respond['order'];
 
                     do_action('sejoli/order/new', $order_data);
+                    do_action('sejoli/order/set-status/completed', $order_data);
+                    do_action('sejoli/order/update-status', [
+                        'ID'     => $respond['order']['ID'],
+                        'status' => 'completed'
+                    ]);
+
+                    // do_action( 'sejoli/order/create', $order_data );
 
                     $update_query = "update " . LFB_FORM_DATA_TBL . " set status='customer' where id='" . $leadID . "'";
                     $th_save_db = new LFB_SAVE_DB( $wpdb );
                     $update_leads = $th_save_db->lfb_update_form_data( $update_query );
 
                     echo lfb_customeremail_send( $form_data, $form_id, $lead_id, $product_id, $affiliate_id, $email );
-
                     echo lfb_send_data_wa( $form_id, $form_data, $lead_id, $product_id, $affiliate_id );
 
-                    echo lfb_send_data_sms( $form_id, $form_data, $lead_id, $product_id, $affiliate_id );
+                    // echo lfb_send_data_sms( $form_id, $form_data, $lead_id, $product_id, $affiliate_id );
 
                     return wp_send_json(true);
 

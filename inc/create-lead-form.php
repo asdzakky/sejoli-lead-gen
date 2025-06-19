@@ -96,9 +96,6 @@ Class LFB_AddNewForm {
             <a class="nav-tab nav-tab-active lead-form-create-form" href="#">'.esc_html__('Create Form','sejoli-lead-form').'</a>
             <a class="nav-tab lead-form-email-setting" href="#">'.esc_html__('Email Setting','sejoli-lead-form').'</a>
             <a class="nav-tab lead-form-wa-setting" href="#">'.esc_html__('WhatsApp Setting','sejoli-lead-form').'</a>
-            <a class="nav-tab lead-form-sms-setting" href="#">'.esc_html__('SMS Setting','sejoli-lead-form').'</a>
-            <a class="nav-tab lead-form-autoresponder-setting" href="#">'.esc_html__('Autoresponder Setting','sejoli-lead-form').'</a>
-            <a class="nav-tab lead-form-followup-setting" href="#">'.esc_html__('Follow Up Setting','sejoli-lead-form').'</a>
             <a class="nav-tab lead-form-customer-setting" href="#">'.esc_html__('Customer Setting','sejoli-lead-form').'</a>
             <a class="nav-tab lead-form-captcha-setting" href="#">'.esc_html__('Captcha Setting','sejoli-lead-form').'</a>
             <a class="nav-tab lead-form-setting" href="#">'.esc_html__('Setting','sejoli-lead-form').'</a>
@@ -143,21 +140,21 @@ Class LFB_AddNewForm {
         echo '</section>
         <section>';
 
-        if (is_admin()) {
-            echo '<div class="wrap">
-            <div class="form-block" style="margin-top: 1.5em;">
-                <div class="infobox">
-                <h1>'.esc_html__('SMS Setting','sejoli-lead-form').'</h1></div>
-                <br class="clear"><div class="inside setting_section">
-                <div class="card" style="margin: 0;padding: 0;">
-                <form name="" id="new-lead-email-setting" method="post" action="">
-                <p class="sec_head">'.esc_html__('Please create and save your Lead Form to do these settings.','sejoli-lead-form').'</p>  
-                </form>            
-                </div>
-                </div><br class="clear"></div></div>';
-        }
-        echo '</section>
-        <section>';
+        // if (is_admin()) {
+        //     echo '<div class="wrap">
+        //     <div class="form-block" style="margin-top: 1.5em;">
+        //         <div class="infobox">
+        //         <h1>'.esc_html__('SMS Setting','sejoli-lead-form').'</h1></div>
+        //         <br class="clear"><div class="inside setting_section">
+        //         <div class="card" style="margin: 0;padding: 0;">
+        //         <form name="" id="new-lead-email-setting" method="post" action="">
+        //         <p class="sec_head">'.esc_html__('Please create and save your Lead Form to do these settings.','sejoli-lead-form').'</p>  
+        //         </form>            
+        //         </div>
+        //         </div><br class="clear"></div></div>';
+        // }
+        // echo '</section>
+        // <section>';
 
         if (is_admin()) {
             echo '<div class="wrap">
@@ -175,21 +172,21 @@ Class LFB_AddNewForm {
         echo '</section>
         <section>';
 
-        if (is_admin()) {
-            echo '<div class="wrap">
-            <div class="form-block" style="margin-top: 1.5em;">
-                <div class="infobox">
-                <h1>'.esc_html__('Follow Up Setting','sejoli-lead-form').'</h1></div>
-                <br class="clear"><div class="inside setting_section">
-                <div class="card" style="margin: 0;padding: 0;">
-                <form name="" id="new-lead-email-setting" method="post" action="">
-                <p class="sec_head">'.esc_html__('Please create and save your Lead Form to do these settings.','sejoli-lead-form').'</p>  
-                </form>            
-                </div>
-                </div><br class="clear"></div></div>';
-        }
-        echo '</section>
-        <section>';
+        // if (is_admin()) {
+        //     echo '<div class="wrap">
+        //     <div class="form-block" style="margin-top: 1.5em;">
+        //         <div class="infobox">
+        //         <h1>'.esc_html__('Follow Up Setting','sejoli-lead-form').'</h1></div>
+        //         <br class="clear"><div class="inside setting_section">
+        //         <div class="card" style="margin: 0;padding: 0;">
+        //         <form name="" id="new-lead-email-setting" method="post" action="">
+        //         <p class="sec_head">'.esc_html__('Please create and save your Lead Form to do these settings.','sejoli-lead-form').'</p>  
+        //         </form>            
+        //         </div>
+        //         </div><br class="clear"></div></div>';
+        // }
+        // echo '</section>
+        // <section>';
 
         if (is_admin()) {
             echo '<div class="wrap">

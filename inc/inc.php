@@ -1,7 +1,8 @@
 <?php
     if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-    if(false === sejolisa_lead_check_valid_license() ) :
+    $get_sejoli_license_status = get_transient( 'sejoli_lead_subscription_validate_licensed' );
+    if('subscribed' !== $get_sejoli_license_status ) :
         return;
     endif;
 

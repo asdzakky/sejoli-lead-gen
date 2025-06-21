@@ -70,7 +70,6 @@ if (!function_exists('lfb_plugin_action_links')){
 
     include_once( LFB_PLUGIN_DIR . 'inc/lfb-widget.php' );
 
-
 }
 
 add_action('plugins_loaded', 'sejoli_lead_check_sejoli');
@@ -99,7 +98,8 @@ function sejoli_lead_check_sejoli() {
 add_action('admin_notices', 'display_lead_license_message');
 function display_lead_license_message() {
 
-    if(false === sejolisa_lead_check_valid_license() ) :
+    $get_sejoli_license_status = get_transient( 'sejoli_lead_subscription_validate_licensed' );
+    if('subscribed' !== $get_sejoli_license_status ) :
 
 ?>
         <div class="notice notice-error">
@@ -130,21 +130,57 @@ function sejoli_plugin_activation_check() {
             )
         );
 
-    endif;
+    else:
 
-    if(false === sejolisa_lead_check_valid_license() ) :
-    
-        deactivate_plugins(plugin_basename(__FILE__));
+        $get_sejoli_license_status = get_transient( 'sejoli_lead_subscription_validate_licensed' );
 
-        // Stop the activation process
-        wp_die(
-            __('Plugin Sejoli Lead Campaign Tidak Bisa diaktifkan, Anda belum menginstall atau mengaktifkan SEJOLI terlebih dahulu.', 'sejoli-lead-form'),
-            __('Aktivasi Gagal', 'sejoli-lead-form'),
-            array(
-                'link_url' => admin_url('plugins.php'),
-                'link_text' => __('Kembali ke halaman Plugin', 'sejoli-lead-form')
-            )
-        );
+        if( empty($get_sejoli_license_status) || !empty($get_sejoli_license_status) ) :
+
+            $host   = $_SERVER['HTTP_HOST'];
+
+            if( empty($host) ) :
+                $host = str_replace(array( 'https://', 'http://', 'www.' ), '', get_option('site_url'));
+            endif;
+
+            $post_data = [
+                'host' => $host
+            ];
+            
+            $link = add_query_arg(array(
+                        'string'    => $host
+                    ), 'https://member.sejoli.co.id/sejoli-validate-license/');
+            $response = wp_remote_get($link);
+            $response = json_decode(wp_remote_retrieve_body($response), true);
+            
+            if (isset($response['detail']['status']) && $response['detail']['status'] === "active" || $response['detail']['status'] === "expired" || empty($response['detail']['status'])) :
+
+                set_transient( 'sejoli_lead_subscription_validate_licensed', "subscribed", 2 * DAY_IN_SECONDS );
+                
+                return;
+
+            else:
+
+                set_transient( 'sejoli_lead_subscription_validate_licensed', "not_subscribed", 2 * DAY_IN_SECONDS );
+
+            endif;
+        
+        endif;
+
+        if('subscribed' !== $get_sejoli_license_status ) :    
+        
+            deactivate_plugins(plugin_basename(__FILE__));
+
+            // Stop the activation process
+            wp_die(
+                __('Plugin Sejoli Lead Campaign Tidak Bisa diaktifkan, Anda belum menginstall atau mengaktifkan SEJOLI terlebih dahulu.', 'sejoli-lead-form'),
+                __('Aktivasi Gagal', 'sejoli-lead-form'),
+                array(
+                    'link_url' => admin_url('plugins.php'),
+                    'link_text' => __('Kembali ke halaman Plugin', 'sejoli-lead-form')
+                )
+            );
+
+        endif;
 
     endif;
 

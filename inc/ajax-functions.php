@@ -1245,6 +1245,7 @@ function lfb_register_autoresponder($form_id, $product, $form_data) {
     $posts = $th_save_db->lfb_get_form_data($form_id);
 
     $code = $posts[0]->autoresponder_setting;
+
     if($code) :
 
         $autoresponder = sejolisa_parsing_form_html_code( $code );
@@ -1259,52 +1260,55 @@ function lfb_register_autoresponder($form_id, $product, $form_data) {
             $form_field = $th_save_db->lfb_admin_email_send($form_id);
             $form_data = maybe_unserialize($form_data);
 
+            $data_email = '';
+            $data_name  = '';
+            $data_phone  = '';
             foreach ($form_datas as $results) {
 
                 $type = isset($results['field_type']['type']) ? $results['field_type']['type'] : '';
                 $field_id = $results['field_id'];
 
-                $data_email = '';
-                $data_name  = '';
-                $data_phone  = '';
+                $key = "{$type}_{$field_id}";
+                $value = isset($form_data[$key]) ? $form_data[$key] : '';
 
-                if ($type === 'email') { 
-                    $data_email = $form_data['email_'.$field_id];
-                } elseif($type === 'name') { 
-                    $data_name = $form_data['name_'.$field_id];
-                } elseif ( $type === 'phonenumber' ) {
-                    $data_phone = phone_number_format($form_data['phonenumber_'.$field_id]);
+                if ($type === 'email') {
+                    $data_email = $value;
+                } elseif ($type === 'name') {
+                    $data_name = $value;
+                } elseif ($type === 'phonenumber') {
+                    $data_phone = phone_number_format($value);
                 }
 
+                foreach($autoresponder['fields'] as $field) :
+
+                    if('email' === $field['type']) :
+                        $body_fields[$field['name']] = $data_email;
+                    elseif('name' === $field['type']) :
+                        $body_fields[$field['name']] = $data_name;
+                    elseif('hidden' === $field['type']) :
+                        $body_fields[$field['name']] = $field['value'];
+                    else :
+                        $body_fields[$field['name']] = $field['value']; // fallback
+                    endif;
+
+                endforeach;
+
+                $response = wp_remote_post( $autoresponder['form']['action'][0], [
+                    'method'  => 'POST',
+                    'timeout' => 30,
+                    'headers' => array(
+                        'Referer'    => site_url(),
+                        'User-Agent' => $_SERVER['HTTP_USER_AGENT']
+                    ),
+                    'body' => $body_fields
+                ]);
+
+                do_action('sejoli/log/write', 'response autoresponder subscription', [
+                    'url'         => $autoresponder['form']['action'][0],
+                    'body_fields' => $body_fields,
+                    'response'    => strip_tags(wp_remote_retrieve_body($response))
+                ]);
             }
-
-            foreach($autoresponder['fields'] as $field) :
-
-                if('email' === $field['type']) :
-                    $body_fields[$field['name']] = $data_email;
-                elseif('name' === $field['type']) :
-                    $body_fields[$field['name']] = $data_name;
-                else :
-                    $body_fields[$field['name']] = $field['value'];
-                endif;
-
-            endforeach;
-
-            $response = wp_remote_post( $autoresponder['form']['action'][0], [
-                'method'  => 'POST',
-                'timeout' => 30,
-                'headers' => array(
-                    'Referer'    => site_url(),
-                    'User-Agent' => $_SERVER['HTTP_USER_AGENT']
-                ),
-                'body' => $body_fields
-            ]);
-
-            do_action('sejoli/log/write', 'response autoresponder subscription', [
-                'url'         => $autoresponder['form']['action'][0],
-                'body_fields' => $body_fields,
-                'response'    => strip_tags(wp_remote_retrieve_body($response))
-            ]);
 
         endif;
 

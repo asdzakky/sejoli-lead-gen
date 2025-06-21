@@ -8,9 +8,10 @@ if (!function_exists('themehunk_admin_menu')) {
     add_action('admin_menu',  'themehunk_admin_menu');
     add_action( 'admin_enqueue_scripts', 'admin_scripts');
     include_once LEADCAMPAIGN_PDIR . '../lf-install.php';
-
+    
     function themehunk_admin_menu(){
-        if(false === sejolisa_lead_check_valid_license() ) :
+        $get_sejoli_license_status = get_transient( 'sejoli_lead_subscription_validate_licensed' );
+        if('subscribed' !== $get_sejoli_license_status ) :
             return;
         endif;
         add_menu_page(__('Lead Campaign', 'sejoli-lead-form'), __('Lead Campaign', 'sejoli-lead-form'), 'manage_options', 'lead-forms', 'lfb_lead_form_page',  LEADCAMPAIGN_PURL . 'th-option/assets/images/icon.png', 35);

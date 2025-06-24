@@ -58,10 +58,8 @@ if (!empty($posts)) {
         $table_row .= "<td>".sejolisa_price_format($product->price)."</td>";
         
         if($affiliate_id > 0) {
-            $table_row .= "<td>".$affiliate_id."</td>";
             $table_row .= "<td>".$affiliate->display_name."</td>";
         } else {
-            $table_row .= "<td>-</td>";
             $table_row .= "<td>-</td>";
         }
 
@@ -91,10 +89,10 @@ if (!empty($posts)) {
 
     if(wp_is_mobile()){
         $thHead = '<div class="wrap" id="form-leads-show"><table class="show-leads-table wp-list-table widefat " style="width: 100%" id="show-leads-table" >
-        <thead><tr>'.$tableHead.'<th>Product</th><th>Value</th><th>Affiliate ID</th><th>Affiliate</th><th>Date</th>'.$table_head.'<th>Status</th></tr></thead>';
+        <thead><tr>'.$tableHead.'<th>Product</th><th>Value</th><th>Affiliate</th><th>Date</th>'.$table_head.'<th>Status</th></tr></thead>';
     } else {
         $thHead = '<div class="wrap" id="form-leads-show"><table class="show-leads-table wp-list-table widefat " style="width: 100%" id="show-leads-table" >
-        <thead><tr>'.$tableHead.'<th>Product</th><th>Value</th><th>Affiliate ID</th><th>Affiliate</th><th>Date</th>'.$table_head.'<th>Status</th></tr></thead>';
+        <thead><tr>'.$tableHead.'<th>Product</th><th>Value</th><th>Affiliate</th><th>Date</th>'.$table_head.'<th>Status</th></tr></thead>';
     }
 
     echo wp_kses($thHead. $table_body.'</table>'.$popupTab,$this->expanded_alowed_tags());

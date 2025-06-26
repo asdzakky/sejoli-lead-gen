@@ -690,7 +690,7 @@ function add_new_form_fields(this_field_id) {
         var field_id = this_field_id + 1;
         var field_sr = "<td>" + field_id + "</td>";
         var field_name = "<td><input type='text' name='lfb_form[form_field_" + field_id + "][field_name]' id='field_name_" + field_id + "' value=''></td>";
-        var field_type = "<td><select name='lfb_form[form_field_" + field_id + "][field_type][type]' id='field_type_" + field_id + "'><option value='select'>Select Field Type</option><option value='name'>Name</option><option value='email'>Email</option><option value='message'>Message</option><option value='dob'>DOB</option><option value='date'>Date</option><option value='text'>Text (Single Line Text)</option><option value='textarea'>Textarea (Multiple Line Text)</option><option value='htmlfield'>Content Area (Read only Text)</option><option value='url'>Url (Website url)</option><option value='phonenumber'>Phone Number</option><option value='upload'>Upload File/Image</option><option value='number'>Number (Only Numeric 0-9 )</option><option value='radio'>Radio (Choose Single Option)</option><option value='option'>Option (Choose Single Option)</option><option value='checkbox'>Checkbox (Choose Multiple Option)</option><option value='terms'>Checkbox (Terms & condition)</option></select><div class='add_radio_checkbox_" + field_id + "' id='add_radio_checkbox'><div class='' id='add_radio'></div><div class='' id='add_checkbox'></div><div class='' id='add_option'></div></div></td>";
+        var field_type = "<td><select name='lfb_form[form_field_" + field_id + "][field_type][type]' id='field_type_" + field_id + "'><option value='select'>Select Field Type</option><option value='name'>Name</option><option value='email'>Email</option><option value='message'>Message</option><option value='dob'>DOB</option><option value='date'>Date</option><option value='text'>Text (Single Line Text)</option><option value='textarea'>Textarea (Multiple Line Text)</option><option value='htmlfield'>Content Area (Read only Text)</option><option value='url'>Url (Website url)</option><option value='phonenumber'>Phone Number</option><option value='upload'>Upload File/Image</option><option value='number'>Number (Only Numeric 0-9 )</option><option value='radiopanggilan'>Radio (Panggilan)</option><option value='radio'>Radio (Choose Single Option)</option><option value='option'>Option (Choose Single Option)</option><option value='checkbox'>Checkbox (Choose Multiple Option)</option><option value='terms'>Checkbox (Terms & condition)</option></select><div class='add_radio_checkbox_" + field_id + "' id='add_radio_checkbox'><div class='' id='add_radio'></div><div class='' id='add_checkbox'></div><div class='' id='add_option'></div></div></td>";
         var field_default = "<td><input type='text' class='default_value' name='lfb_form[form_field_" + field_id + "][default_value]' id='default_value_" + field_id + "' value=''><div class='default_htmlfield_" + field_id + "'' id='default_htmlfield'></div><div class='default_terms_" + field_id + "'' id='default_terms'></div><div class='add_default_radio_checkbox_" + field_id + "' id='add_default_radio_checkbox'><div class='' id='default_add_radio'></div><div class='' id='default_add_checkbox'></div><div class='' id='default_add_option'></div></div></td>";
         var field_required = "<td><input type='checkbox' class='is_required' name='lfb_form[form_field_" + field_id + "][is_required]' id='is_required_" + field_id + "' value='1'></td>";
 
@@ -781,6 +781,25 @@ jQuery("#wpth_add_form").on('change', 'select', function() {
     jQuery(parent_id).find('#default_htmlfield').hide();
 
     if (str == 'radio') {
+        jQuery(parent_id).find('#add_radio').css("display", "block");
+        jQuery(parent_id).find('#add_checkbox').css("display", "none");
+        jQuery(parent_id).find('#add_option').css("display", "none");
+        jQuery(parent_id).find('#default_add_radio').css("display", "block");
+        jQuery(parent_id).find('#default_add_checkbox').css("display", "none");
+        jQuery(parent_id).find('#default_add_option').css("display", "none");
+
+        var radio_res = jQuery(parent_id).find('#add_radio input').length;
+        if (radio_res < 1) {
+            var radio_fields = "<input type='text' class='input_radio_val' name='lfb_form[form_field_" + this_parent_id + "][field_type][field_1]' id='radio_field_1' placeholder='radio name 1'value=''><p class='button lf_minus' id='delete_radio_1' onclick='delete_radio_fields(" + this_parent_id + ",1)'><i class='fa fa-minus' aria-hidden='true'></i></p><p class='button lf_plus' id='add_new_radio_1' onclick='add_new_radio_fields(" + this_parent_id + ",1)'><i class='fa fa-plus' aria-hidden='true'></i></p>";
+            var default_add_radio = "<p id='default_radio_value_1'>radio name 1 <input type='radio' class='' name='lfb_form[form_field_" + this_parent_id + "][default_value][field]' id='default_radio_value_1' value='1'></p>";
+            jQuery(parent_id).find('#add_radio').append(radio_fields);
+            jQuery(parent_id).find('#default_add_radio').append(default_add_radio);
+            jQuery(parent_id).find('#delete_radio_1').css("display", "inline-block");
+            jQuery(parent_id).find('input.default_value').attr('disabled', 'disabled');
+            jQuery(parent_id).find('input.default_placeholder').attr('disabled', 'disabled');
+
+        }
+    } else if (str == 'radiopanggilan') {
         jQuery(parent_id).find('#add_radio').css("display", "block");
         jQuery(parent_id).find('#add_checkbox').css("display", "none");
         jQuery(parent_id).find('#add_option').css("display", "none");

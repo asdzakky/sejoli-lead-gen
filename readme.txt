@@ -20,7 +20,7 @@ This section describes how to install the plugin and get it working.
 
 e.g.
 
-1. Upload `sejoli-lead-gen.zip` to the `/wp-content/plugins/` directory
+1. Upload `sejoli-lead-campaign.zip` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Frequently Asked Questions ==
@@ -32,6 +32,10 @@ Coming soon
 Coming soon
 
 == Changelog ==
+
+= 1.1.2
+* Add Autoresponder
+* Add radio panggilan field
 
 = 1.1.1
 * Remove SMS, Follow Up Feature

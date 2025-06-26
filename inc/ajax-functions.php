@@ -1428,6 +1428,7 @@ function lfb_customeremail_send($form_data,$form_id,$lead_id,$form_product,$form
     $shortcode_lead_name = '[lead-name]';
     $shortcode_lead_email = '[lead-email]';
     $shortcode_lead_phone = '[lead-phone]';
+    $shortcode_lead_panggilan = '[lead-panggilan]';
     $shortcode_affiliate_name = '[affiliate-name]';
     $shortcode_affiliate_phone = '[affiliate-phone]';
     $shortcode_affiliate_email = '[affiliate-email]';
@@ -1475,6 +1476,8 @@ function lfb_customeremail_send($form_data,$form_id,$lead_id,$form_product,$form
             $lead_name = $form_data['name_'.$field_id];
         } elseif ( $type === 'phonenumber' ) {
             $lead_phone = '+62'.$form_data['phonenumber_'.$field_id];
+        } elseif ( $type === 'radiopanggilan' ) {
+            $lead_panggilan = $form_data['radiopanggilan_'.$field_id];
         }
 
     }
@@ -1485,6 +1488,7 @@ function lfb_customeremail_send($form_data,$form_id,$lead_id,$form_product,$form
     $message = str_replace($shortcode_lead_name, $lead_name, $message);
     $message = str_replace($shortcode_lead_email, $lead_email, $message);
     $message = str_replace($shortcode_lead_phone, $lead_phone, $message);
+    $message = str_replace($shortcode_lead_panggilan, $lead_panggilan, $message);
     $message = str_replace($shortcode_affiliate_name, $affiliate_name, $message);
     $message = str_replace($shortcode_affiliate_email, $affiliate_email, $message);
     $message = str_replace($shortcode_affiliate_phone, $affiliate_phone, $message);
@@ -1539,6 +1543,7 @@ function lfb_send_data_wa($form_id,$form_data,$lead_id,$form_product,$form_affil
         $shortcode_lead_name = '[lead-name]';
         $shortcode_lead_email = '[lead-email]';
         $shortcode_lead_phone = '[lead-phone]';
+        $shortcode_lead_panggilan = '[lead-panggilan]';
         $shortcode_affiliate_name = '[affiliate-name]';
         $shortcode_affiliate_phone = '[affiliate-phone]';
         $shortcode_affiliate_email = '[affiliate-email]';
@@ -1587,6 +1592,8 @@ function lfb_send_data_wa($form_id,$form_data,$lead_id,$form_product,$form_affil
                 $lead_name = $form_data['name_'.$field_id];
             } elseif ( $type === 'phonenumber' ) {
                 $lead_phone = '+62'.$form_data['phonenumber_'.$field_id];
+            } elseif ( $type === 'radiopanggilan' ) {
+                $lead_panggilan = $form_data['radiopanggilan_'.$field_id];
             }
 
         }
@@ -1597,6 +1604,7 @@ function lfb_send_data_wa($form_id,$form_data,$lead_id,$form_product,$form_affil
         $user_message = str_replace($shortcode_lead_name, $lead_name, $user_message);
         $user_message = str_replace($shortcode_lead_email, $lead_email, $user_message);
         $user_message = str_replace($shortcode_lead_phone, $lead_phone, $user_message);
+        $user_message = str_replace($shortcode_lead_panggilan, $lead_phone, $user_message);
         $user_message = str_replace($shortcode_affiliate_name, $affiliate_name, $user_message);
         $user_message = str_replace($shortcode_affiliate_email, $affiliate_email, $user_message);
         $user_message = str_replace($shortcode_affiliate_phone, $affiliate_phone, $user_message);
@@ -1642,6 +1650,7 @@ function lfb_send_data_sms($form_id,$form_data,$lead_id,$form_product,$form_affi
         $shortcode_lead_name = '[lead-name]';
         $shortcode_lead_email = '[lead-email]';
         $shortcode_lead_phone = '[lead-phone]';
+        $shortcode_lead_panggilan = '[lead-panggilan]';
         $shortcode_affiliate_name = '[affiliate-name]';
         $shortcode_affiliate_phone = '[affiliate-phone]';
         $shortcode_affiliate_email = '[affiliate-email]';
@@ -1690,6 +1699,8 @@ function lfb_send_data_sms($form_id,$form_data,$lead_id,$form_product,$form_affi
                 $lead_name = $form_data['name_'.$field_id];
             } elseif ( $type === 'phonenumber' ) {
                 $lead_phone = '+62'.$form_data['phonenumber_'.$field_id];
+            } elseif ( $type === 'radiopanggilan' ) {
+                $lead_panggilan = $form_data['radiopanggilan_'.$field_id];
             }
 
         }
@@ -1700,6 +1711,7 @@ function lfb_send_data_sms($form_id,$form_data,$lead_id,$form_product,$form_affi
         $user_message = str_replace($shortcode_lead_name, $lead_name, $user_message);
         $user_message = str_replace($shortcode_lead_email, $lead_email, $user_message);
         $user_message = str_replace($shortcode_lead_phone, $lead_phone, $user_message);
+        $user_message = str_replace($shortcode_lead_panggilan, $lead_panggilan, $user_message);
         $user_message = str_replace($shortcode_affiliate_name, $affiliate_name, $user_message);
         $user_message = str_replace($shortcode_affiliate_email, $affiliate_email, $user_message);
         $user_message = str_replace($shortcode_affiliate_phone, $affiliate_phone, $user_message);

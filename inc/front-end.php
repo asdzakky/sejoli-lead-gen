@@ -173,6 +173,9 @@ Class LFB_Front_end_FORMS {
                 }elseif ($field_type == 'textarea' || $field_type == 'message') {
                     /***Textarea & Message***/
                     $form_elemets .=$this->lfb_front_end_field_type_textarea($data_array);
+                }elseif ($field_type == 'radiopanggilan') {
+                    /***Radio***/
+                    $form_elemets .=$this->lfb_front_end_field_type_radio($data_array);
                 }elseif ($field_type == 'radio') {
                     /***Radio***/
                     $form_elemets .=$this->lfb_front_end_field_type_radio($data_array);

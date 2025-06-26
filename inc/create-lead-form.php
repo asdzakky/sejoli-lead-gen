@@ -9,7 +9,7 @@ require_once('edit-delete-form.php');
  */
 function lfb_create_form_sanitize($form_data){
     $fieldArr =array('name','email','message','dob','date','url','text','textarea','phonenumber','number','submit');
-    $field_rco =array('option','checkbox','radio');
+    $field_rco =array('option','checkbox','radiopanggilan', 'radio');
     foreach($form_data as $key=>$value){
         if(in_array($value['field_type']['type'], $fieldArr)){
             $form_data[$key]['field_name'] = sanitize_text_field($value['field_name']);
@@ -356,6 +356,7 @@ Class LFB_AddNewForm {
             <option value='phonenumber'>".esc_html__('Phone Number','sejoli-lead-form')." </option>
             <option value='number'>".esc_html__('Number (Only Numeric 0-9 )','sejoli-lead-form')." </option>
             <option value='upload'>".esc_html__('Upload File/Image','sejoli-lead-form')." </option>
+            <option value='radiopanggilan'>".esc_html__('Radio (Panggilan)','sejoli-lead-form')."</option>    
             <option value='radio'>".esc_html__('Radio (Choose Single Option)','sejoli-lead-form')."</option>    
             <option value='option'>".esc_html__('Option (Choose Single Option)','sejoli-lead-form')."</option>  
             <option value='checkbox'>".esc_html__('Checkbox (Choose Multiple Option)','sejoli-lead-form')."</option>

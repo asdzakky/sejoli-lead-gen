@@ -37,7 +37,7 @@ echo '<div class="form-block" style="padding-top:2em">
             $form_title = $results->form_title;
             $product_id = $results->product;
             $product    = sejolisa_get_product($product_id);
-            $product_name = !isset($product) ? $product->post_title : '';
+            $product_name = isset($product) ? $product->post_title : '';
             $form_date = $results->date;
             $form_id = $results->id;
             $captcha_status = $results->captcha_status;

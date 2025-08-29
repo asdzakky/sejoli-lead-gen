@@ -1475,7 +1475,8 @@ function lfb_customeremail_send($form_data,$form_id,$lead_id,$form_product,$form
         } elseif($type === 'name') { 
             $lead_name = $form_data['name_'.$field_id];
         } elseif ( $type === 'phonenumber' ) {
-            $lead_phone = '+62'.$form_data['phonenumber_'.$field_id];
+            $lead_phone = phone_number_format($form_data['phonenumber_'.$field_id]);
+
         } elseif ( $type === 'radiopanggilan' ) {
             $lead_panggilan = $form_data['radiopanggilan_'.$field_id];
         }
@@ -1591,7 +1592,7 @@ function lfb_send_data_wa($form_id,$form_data,$lead_id,$form_product,$form_affil
             } elseif($type === 'name') { 
                 $lead_name = $form_data['name_'.$field_id];
             } elseif ( $type === 'phonenumber' ) {
-                $lead_phone = '+62'.$form_data['phonenumber_'.$field_id];
+                $lead_phone = phone_number_format($form_data['phonenumber_'.$field_id]);
             } elseif ( $type === 'radiopanggilan' ) {
                 $lead_panggilan = $form_data['radiopanggilan_'.$field_id];
             }
@@ -1698,7 +1699,7 @@ function lfb_send_data_sms($form_id,$form_data,$lead_id,$form_product,$form_affi
             } elseif($type === 'name') { 
                 $lead_name = $form_data['name_'.$field_id];
             } elseif ( $type === 'phonenumber' ) {
-                $lead_phone = '+62'.$form_data['phonenumber_'.$field_id];
+                $lead_phone = phone_number_format($form_data['phonenumber_'.$field_id]);
             } elseif ( $type === 'radiopanggilan' ) {
                 $lead_panggilan = $form_data['radiopanggilan_'.$field_id];
             }

@@ -336,7 +336,9 @@ Class LFB_LeadStoreType{
                 } elseif($type === 'name') { 
                     $lead_name = $form_data['name_'.$field_id];
                 } elseif ( $type === 'phonenumber' ) {
-                    $lead_phone = '+62'.$form_data['phonenumber_'.$field_id];
+                    $phone_number = ltrim($form_data['phonenumber_'.$field_id], '0');
+                    // Menambahkan +62 di depan
+                    $lead_phone = '+62' . $phone_number;
                 } elseif ($type === 'upload') { 
                     $lead_uploaded_file = $form_data['upload_'.$field_id];
                     $getFileUploadSource[] = $lead_uploaded_file['url'];
@@ -501,7 +503,9 @@ Class LFB_LeadStoreType{
             } elseif($type === 'name') { 
                 $lead_name = $form_data['name_'.$field_id];
             } elseif ( $type === 'phonenumber' ) {
-                $lead_phone = '+62'.$form_data['phonenumber_'.$field_id];
+                $phone_number = ltrim($form_data['phonenumber_'.$field_id], '0');
+                // Menambahkan +62 di depan
+                $lead_phone = '+62' . $phone_number;
             } elseif ($type === 'upload') { 
                 $lead_uploaded_file = $form_data['upload_'.$field_id];
                 $getFileUploadSource[] = $lead_uploaded_file['url'];
@@ -633,7 +637,9 @@ Class LFB_LeadStoreType{
             } elseif($type === 'name') { 
                 $lead_name = $form_data['name_'.$field_id];
             } elseif ( $type === 'phonenumber' ) {
-                $lead_phone = '+62'.$form_data['phonenumber_'.$field_id];
+                $phone_number = ltrim($form_data['phonenumber_'.$field_id], '0');
+                // Menambahkan +62 di depan
+                $lead_phone = '+62' . $phone_number;
             } elseif ($type === 'upload') { 
                 $lead_uploaded_file = $form_data['upload_'.$field_id];
                 $getFileUploadSource[] = $lead_uploaded_file['url'];
@@ -767,7 +773,9 @@ Class LFB_LeadStoreType{
                 } elseif($type === 'name') { 
                     $lead_name = $form_data['name_'.$field_id];
                 } elseif ( $type === 'phonenumber' ) {
-                    $lead_phone = '+62'.$form_data['phonenumber_'.$field_id];
+                    $phone_number = ltrim($form_data['phonenumber_'.$field_id], '0');
+                    // Menambahkan +62 di depan
+                    $lead_phone = '+62' . $phone_number;
                 } elseif ( $type === 'radiopanggilan' ) {
                     $lead_panggilan = $form_data['radiopanggilan_'.$field_id];
                 }
@@ -864,7 +872,9 @@ Class LFB_LeadStoreType{
                 } elseif($type === 'name') { 
                     $lead_name = $form_data['name_'.$field_id];
                 } elseif ( $type === 'phonenumber' ) {
-                    $lead_phone = '+62'.$form_data['phonenumber_'.$field_id];
+                    $phone_number = ltrim($form_data['phonenumber_'.$field_id], '0');
+                    // Menambahkan +62 di depan
+                    $lead_phone = '+62' . $phone_number;
                 } elseif ( $type === 'radiopanggilan' ) {
                     $lead_panggilan = $form_data['radiopanggilan_'.$field_id];
                 }
@@ -951,7 +961,9 @@ Class LFB_LeadStoreType{
                 } elseif($type === 'name') { 
                     $lead_name = $form_data['name_'.$field_id];
                 } elseif ( $type === 'phonenumber' ) {
-                    $lead_phone = '+62'.$form_data['phonenumber_'.$field_id];
+                    $phone_number = ltrim($form_data['phonenumber_'.$field_id], '0');
+                    // Menambahkan +62 di depan
+                    $lead_phone = '+62' . $phone_number;
                 } elseif ( $type === 'radiopanggilan' ) {
                     $lead_panggilan = $form_data['radiopanggilan_'.$field_id];
                 }
@@ -1047,7 +1059,9 @@ Class LFB_LeadStoreType{
                 } elseif($type === 'name') { 
                     $lead_name = $form_data['name_'.$field_id];
                 } elseif ( $type === 'phonenumber' ) {
-                    $lead_phone = '+62'.$form_data['phonenumber_'.$field_id];
+                    $phone_number = ltrim($form_data['phonenumber_'.$field_id], '0');
+                    // Menambahkan +62 di depan
+                    $lead_phone = '+62' . $phone_number;
                 } elseif ( $type === 'radiopanggilan' ) {
                     $lead_panggilan = $form_data['radiopanggilan_'.$field_id];
                 }
@@ -1143,7 +1157,9 @@ Class LFB_LeadStoreType{
                 } elseif($type === 'name') { 
                     $lead_name = $form_data['name_'.$field_id];
                 } elseif ( $type === 'phonenumber' ) {
-                    $lead_phone = '+62'.$form_data['phonenumber_'.$field_id];
+                    $phone_number = ltrim($form_data['phonenumber_'.$field_id], '0');
+                    // Menambahkan +62 di depan
+                    $lead_phone = '+62' . $phone_number;
                 } elseif ( $type === 'radiopanggilan' ) {
                     $lead_panggilan = $form_data['radiopanggilan_'.$field_id];
                 }
@@ -1229,7 +1245,9 @@ Class LFB_LeadStoreType{
                 } elseif($type === 'name') { 
                     $lead_name = $form_data['name_'.$field_id];
                 } elseif ( $type === 'phonenumber' ) {
-                    $lead_phone = '+62'.$form_data['phonenumber_'.$field_id];
+                    $phone_number = ltrim($form_data['phonenumber_'.$field_id], '0');
+                    // Menambahkan +62 di depan
+                    $lead_phone = '+62' . $phone_number;
                 } elseif ( $type === 'radiopanggilan' ) {
                     $lead_panggilan = $form_data['radiopanggilan_'.$field_id];
                 }
